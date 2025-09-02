@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main, dev, prod, testing, testing2 ]
   pull_request:
-    branches: [ main, dev, prod ]
+    branches: [ main, dev, prod, testing, testing2 ]
 
 jobs:
   test:
@@ -20,6 +20,8 @@ jobs:
           MONGODB_PASSWORD: root
           REDIS_HOST: localhost
           REDIS_PORT: 6379
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: root
       redis:
         image: redis:7.2-alpine
         ports: [6379:6379]
