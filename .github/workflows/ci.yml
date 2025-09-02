@@ -14,12 +14,6 @@ jobs:
         image: mongo:7.0
         ports: [27017:27017]
         env:
-          MONGODB_HOST: "mongodb://root:root@localhost:27017/mongo?authSource=admin"
-          MONGODB_NAME: mongo
-          MONGODB_USERNAME: root
-          MONGODB_PASSWORD: root
-          REDIS_HOST: localhost
-          REDIS_PORT: 6379
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: root
       redis:
@@ -31,6 +25,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Prepare env
+        run: |
+          if [ -f .env.test ]; then cp .env.test .env; fi
       - name: Install Docker Compose
         run: |
           sudo apt-get update
