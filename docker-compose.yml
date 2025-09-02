@@ -37,6 +37,11 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     ports:
       - "27018:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
   redis:
     image: redis:7.2-alpine
@@ -89,6 +94,7 @@ services:
     env_file:
       - .env.test
     depends_on:
-      - mongo_test
+      mongo_test:
+        condition: service_healthy
     volumes:
       - .:/code
