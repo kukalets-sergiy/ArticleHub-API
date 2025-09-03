@@ -8,10 +8,12 @@ django-celery-beat==2.6.0
 drf-yasg==1.21.7
 gunicorn==21.2.0
 mongoengine==0.27.0
+mongomock==4.1.2
 redis==5.0.4
 pymongo==4.7.2
+pymongo[srv]
 pytest==8.2.2
 pytest-django==4.5.2
-mongomock==4.1.2
 python-dotenv==1.0.1
 setuptools==68.0.0
+

@@ -1,0 +1,65 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    container_name: articlehub_web
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py migrate &&
+             gunicorn articlehub_core.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    restart: always
+    env_file:
+      - .env.prod
+    volumes:
+      - .:/code
+      - ./logs:/code/logs
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: articlehub_redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+    container_name: articlehub_celery
+    command: sh -c "sleep 10 && celery -A articlehub_core worker -l info"
+    restart: always
+    env_file:
+      - .env.prod
+    volumes:
+      - .:/code
+      - ./logs:/code/logs
+    depends_on:
+      - web
+      - redis
+
+  celery-beat:
+    build: .
+    container_name: articlehub_celery_beat
+    command: celery -A articlehub_core beat -l info
+    restart: always
+    env_file:
+      - .env.prod
+    volumes:
+      - .:/code
+      - ./logs:/code/logs
+    depends_on:
+      - web
+      - redis
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: articlehub_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - web
+    restart: always
