@@ -63,3 +63,11 @@ services:
     depends_on:
       - web
     restart: always
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - ./nginx:/etc/nginx
+    entrypoint: ""
+    command: certonly --webroot --webroot-path=/code --email kukaletsserhiy@gmail.com --agree-tos --no-eff-email -d lightray.live
