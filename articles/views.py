@@ -121,8 +121,9 @@ class ArticleAnalyzeView(APIView):
         )
 
 class HealthCheckAPIView(APIView):
-    permission_classes = []
-    authentication_classes = []
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = [MongoUserJWTAuthentication]
+    swagger_schema = ArticlesAutoSchema
 
     @swagger_auto_schema(
         operation_description="Health check endpoint",
