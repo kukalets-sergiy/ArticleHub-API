@@ -12,9 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Copy env file
-        run: cp .env.prod .env
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.7
         with:
