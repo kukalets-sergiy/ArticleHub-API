@@ -17,6 +17,8 @@ services:
       - ./logs:/code/logs
       - static_volume:/code/collected_static
       - media_volume:/code/media
+    networks:
+      - articlehub_net
 
   redis:
     image: redis:7.2-alpine
@@ -24,6 +26,8 @@ services:
     restart: always
     ports:
       - "6379:6379"
+    networks:
+      - articlehub_net
 
   celery:
     build: .
@@ -38,6 +42,8 @@ services:
     depends_on:
       - web
       - redis
+    networks:
+      - articlehub_net
 
   celery-beat:
     build: .
@@ -52,6 +58,8 @@ services:
     depends_on:
       - web
       - redis
+    networks:
+      - articlehub_net
 
   nginx:
     image: nginx:1.27-alpine
@@ -68,6 +76,8 @@ services:
     depends_on:
       - web
     restart: always
+    networks:
+      - articlehub_net
 
   certbot:
     image: certbot/certbot
@@ -75,10 +85,16 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
       - /tmp/acme-challenge:/tmp/acme-challenge
     entrypoint: ""
-    command: sh -c "certbot certonly --webroot -w /tmp/acme-challenge/ -d lightray.live --text --agree-tos --email kukaletsserhiy@gmail.com --rsa-key-size 4096 --verbose --keep-until-expiring --preferred-challenges=http"
+    command: sh -c "certbot certonly --webroot -w /tmp/acme-challenge/ -d lightray.live -d www.lightray.live --text --agree-tos --email kukaletsserhiy@gmail.com --rsa-key-size 4096 --verbose --keep-until-expiring --preferred-challenges=http --expand --non-interactive"
     depends_on:
       - nginx
+    networks:
+      - articlehub_net
 
 volumes:
   static_volume:
   media_volume:
+
+networks:
+  articlehub_net:
+    driver: bridge

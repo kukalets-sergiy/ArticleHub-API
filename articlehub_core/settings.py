@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = [host.strip() for host in os.getenv("ALLOWED_HOSTS", "").split(",") if host.strip()]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -135,6 +135,8 @@ SWAGGER_SETTINGS = {
         }
     },
     "USE_SESSION_AUTH": False,
+    'USE_HTTPS': True,
+    'DEFAULT_API_URL': 'https://lightray.live',	
 }
 
 CELERY_BEAT_SCHEDULE = {
@@ -156,7 +158,14 @@ CELERY_TASK_TRACK_STARTED = True
 # Set a time limit for Celery tasks to 30 minutes (30 * 60 seconds).
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_OERIGINS")
+CORS_ALLOWED_ORIGINS = [
+    origin.strip() for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if origin.strip()
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
