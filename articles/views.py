@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
@@ -118,3 +119,6 @@ class ArticleAnalyzeView(APIView):
             {"message": "Analysis started. Check back later for results."},
             status=202
         )
+
+def health_check(request):
+    return JsonResponse({"status": "ok"})
