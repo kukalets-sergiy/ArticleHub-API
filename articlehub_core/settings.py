@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'articles',
     'drf_yasg',
     'django_celery_beat',
+    'corsheaders',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -154,7 +156,8 @@ CELERY_TASK_TRACK_STARTED = True
 # Set a time limit for Celery tasks to 30 minutes (30 * 60 seconds).
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
-CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
+CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_OERIGINS")
+CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -191,7 +194,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'collected_static'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
