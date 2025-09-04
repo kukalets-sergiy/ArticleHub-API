@@ -120,5 +120,13 @@ class ArticleAnalyzeView(APIView):
             status=202
         )
 
-def health_check(request):
-    return JsonResponse({"status": "ok"})
+class HealthCheckAPIView(APIView):
+    permission_classes = []
+    authentication_classes = []
+
+    @swagger_auto_schema(
+        operation_description="Health check endpoint",
+        responses={200: 'OK'}
+    )
+    def get(self, request):
+        return Response({"status": "ok"})
