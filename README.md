@@ -31,6 +31,9 @@
 
 ### 1. Клонування репозиторію
 
+гілка для продакшн: `prod`
+гілка для девелопменту: `dev`
+
 ```bash
 git clone https://github.com/kukalets-sergiy/ArticleHub-API.git
 cd ArticleHub-API
