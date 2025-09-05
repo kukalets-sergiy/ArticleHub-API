@@ -136,6 +136,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.prod
 .envrc
 .venv
 env/
@@ -224,3 +225,5 @@ pytestdebug.log
 secrets.yaml
 *.iml
 *.code-workspace
+local.crt
+local.key
