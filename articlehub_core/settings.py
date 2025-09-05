@@ -135,8 +135,8 @@ SWAGGER_SETTINGS = {
         }
     },
     "USE_SESSION_AUTH": False,
-    'USE_HTTPS': True,
-    'DEFAULT_API_URL': 'https://lightray.live',	
+    # 'USE_HTTPS': True,
+    # 'DEFAULT_API_URL': 'https://lightray.live',
 }
 
 CELERY_BEAT_SCHEDULE = {
