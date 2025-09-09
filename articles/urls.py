@@ -1,5 +1,5 @@
 from django.urls import path
-from articles.views import ArticleListCreateView, ArticleDetailView, ArticleAnalyzeView, HealthCheckAPIView
+from articles.views import ArticleListCreateView, ArticleDetailView, ArticleAnalyzeView
 
 app_name = 'articles'
 
