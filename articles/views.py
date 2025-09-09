@@ -119,15 +119,3 @@ class ArticleAnalyzeView(APIView):
             {"message": "Analysis started. Check back later for results."},
             status=202
         )
-
-class HealthCheckAPIView(APIView):
-    permission_classes = [permissions.AllowAny]
-    authentication_classes = [MongoUserJWTAuthentication]
-    swagger_schema = ArticlesAutoSchema
-
-    @swagger_auto_schema(
-        operation_description="Health check endpoint",
-        responses={200: 'OK'}
-    )
-    def get(self, request):
-        return Response({"status": "ok"})

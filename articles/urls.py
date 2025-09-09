@@ -7,5 +7,4 @@ urlpatterns = [
     path('', ArticleListCreateView.as_view(), name='article-list-create'),
     path('<str:id>/', ArticleDetailView.as_view(), name='article-detail'),
     path('<str:id>/analyze/', ArticleAnalyzeView.as_view(), name='article-analyze'),
-    path('health-check/', HealthCheckAPIView.as_view(), name='health-check'),
 ]
